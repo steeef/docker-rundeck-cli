@@ -1,4 +1,4 @@
-Containers for [Rundeck CLI](https://rundeck.github.io/rundeck-cli/) and [go-rundeck](https://rundeck.github.io/rundeck-cli/).
+Containers for [Rundeck CLI](https://rundeck.github.io/rundeck-cli/) and [go-rundeck](https://github.com/lusis/go-rundeck).
 
 # go-rundeck
 
