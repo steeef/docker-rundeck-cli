@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 declare -a ARGUMENTS
 for ((i=0;i<${COG_ARGC};i++)); do
