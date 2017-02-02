@@ -2,7 +2,6 @@ FROM golang:alpine
 MAINTAINER Stephen Price <stephen@stp5.net>
 
 ENV RUNDECK_URL=http://rundeck:4440 \
-    RUNDECK_TOKEN=AFAKETOKENPLEASEREPLACE \
     GOPATH=/go:/src/go-rundeck \
     BUILD_DEPS="git tar curl make"
 
