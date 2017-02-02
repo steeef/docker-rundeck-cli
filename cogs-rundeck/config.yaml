@@ -1,0 +1,23 @@
+---
+cog_bundle_version: 4
+name: rundeck
+description: "go-rundeck interface"
+author: "Stephen Price <stephen@stp5.net>"
+homepage: "https://github.com/steeef/docker-rundeck-cli"
+version: "0.1"
+docker:
+  image: "steeef/cog-rundeck"
+  tag: "latest"
+commands:
+  list:
+    executable: "list"
+    description: "List available jobs."
+    long_description: |
+      List jobs in specified project.
+    rules:
+      - "when command is rundeck:list allow"
+    options:
+      project:
+        description: "The project ID."
+        type: string
+        required: true
