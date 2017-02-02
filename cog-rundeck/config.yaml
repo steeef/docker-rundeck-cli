@@ -13,11 +13,36 @@ commands:
     executable: "list"
     description: "List available jobs."
     long_description: |
-      List jobs in specified project.
+      List jobs in a project. If "--prj" is not specified, use the default.
     rules:
       - "when command is rundeck:list allow"
     options:
-      project:
-        description: "The project ID."
+      prj:
+        description: "Project ID of jobs to list."
         type: string
-        required: true
+        required: false
+  run:
+    executable: "run"
+    description: "Run a job by name."
+    rules:
+      - "when command is rundeck:run allow"
+    arguments: "<jobname>"
+    options:
+      prj:
+        description: "Project ID of jobs to list."
+        type: string
+        required: false
+      args:
+        description: "Arguments to send to the job."
+        type: string
+        required: false
+  history:
+    executable: "history"
+    description: "Get job history for a specified project."
+    rules:
+      - "when command is rundeck:history allow"
+    options:
+      prj:
+        description: "Project ID of jobs to list."
+        type: string
+        required: false
