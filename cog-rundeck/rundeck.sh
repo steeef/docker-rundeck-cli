@@ -14,7 +14,7 @@ else
   project=${RUNDECK_DEFAULT_PROJECT}
 fi
 
-case "$1" in
+case "$(basename "$0")" in
   list)
     rundeck-list-jobs ${project} ${ARGUMENTS[*]}
     ;;

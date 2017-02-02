@@ -4,13 +4,13 @@ name: rundeck
 description: "go-rundeck interface"
 author: "Stephen Price <stephen@stp5.net>"
 homepage: "https://github.com/steeef/docker-rundeck-cli"
-version: "0.1.2"
+version: "0.1.3"
 docker:
   image: "steeef/cog-rundeck"
   tag: "latest"
 commands:
   list:
-    executable: "/bundle/rundeck.sh list"
+    executable: "/bundle/list"
     description: "List available jobs."
     long_description: |
       List jobs in a project. If "--prj" is not specified, use the default.
@@ -23,7 +23,7 @@ commands:
         required: false
         short_flag: p
   run:
-    executable: "/bundle/rundeck.sh run"
+    executable: "/bundle/run"
     description: "Run a job by name."
     rules:
       - "when command is rundeck:run allow"
@@ -40,7 +40,7 @@ commands:
         required: false
         short_flag: a
   history:
-    executable: "/bundle/rundeck.sh history"
+    executable: "/bundle/history"
     description: "Get job history for a specified project."
     rules:
       - "when command is rundeck:history allow"
