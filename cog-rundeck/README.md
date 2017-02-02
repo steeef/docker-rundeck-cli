@@ -27,5 +27,5 @@ docker run \
   -e COG_ARGC=1 \
   -e COG_ARGV_0=test \
   --net=container:rundeck \
-  cog-rundeck list
+  steeef/cog-rundeck list
 ```
