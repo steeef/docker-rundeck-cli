@@ -6,5 +6,3 @@ RUN mkdir /bundle
 WORKDIR /bundle
 COPY rundeck.sh /bundle/
 RUN chmod +x /bundle/rundeck.sh
-
-ENTRYPOINT ["/bundle/rundeck.sh"]
