@@ -37,7 +37,7 @@ case "$(basename "$0")" in
   run)
     echo "COGCMD_INFO: Finding job named ${ARGUMENTS[*]} in ${project}"
     jobid=$(rundeck-find-job-by-name "${ARGUMENTS[*]}" ${project} \
-      | grep -E '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' \
+      | grep -E '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' \
       | cut -d' ' -f2)
     if [ -n "${jobid}" ]; then
       echo "COGCMD_INFO: found job: ${jobid}"
