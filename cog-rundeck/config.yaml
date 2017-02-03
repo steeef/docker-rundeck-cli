@@ -50,3 +50,9 @@ commands:
         type: string
         required: false
         short_flag: p
+templates:
+  table:
+    body: |
+      ```
+      ~$results~
+      ```

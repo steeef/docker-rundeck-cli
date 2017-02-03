@@ -20,7 +20,9 @@ echo "COGCMD_INFO: Using project ${project}"
 case "$(basename "$0")" in
   list)
     echo "COGCMD_INFO: Listing jobs in project ${project}"
-    rundeck-list-jobs ${project} ${ARGUMENTS[*]}
+    results=$(rundeck-list-jobs ${project} ${ARGUMENTS[*]})
+    echo "COG_TEMPLATE: table"
+    echo $results
     ;;
   run)
     echo "COGCMD_INFO: Finding job named ${ARGUMENTS[*]} in ${project}"
@@ -28,15 +30,18 @@ case "$(basename "$0")" in
     if [ -n "${jobid}" ]; then
       echo "COGCMD_INFO: found job: ${jobid}"
       echo "COGCMD_INFO: running job ${jobid} with arguments: ${COG_OPT_ARG}"
-      rundeck-run-job ${jobid} ${COG_OPT_ARG}
+      results=$(rundeck-run-job ${jobid} ${COG_OPT_ARG})
     else
       echo "COGCMD_ERROR: job not found."
       echo "ERROR: job not found."
+      exit 1
     fi
     ;;
   history)
     echo "COGCMD_INFO: getting history of ${project}"
-    rundeck-get-history ${project}
+    results=$(rundeck-get-history ${project})
+    echo "COG_TEMPLATE: table"
+    echo $results
     ;;
   *)
     echo "COGCMD_ERROR: command not found: $(basename "$0")"
