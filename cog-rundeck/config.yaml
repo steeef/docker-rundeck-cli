@@ -4,7 +4,7 @@ name: rundeck
 description: "go-rundeck interface"
 author: "Stephen Price <stephen@stp5.net>"
 homepage: "https://github.com/steeef/docker-rundeck-cli"
-version: "0.1.5"
+version: "0.1.6"
 docker:
   image: "steeef/cog-rundeck"
   tag: "latest"
@@ -54,5 +54,7 @@ templates:
   table:
     body: |
       ```
+      ~br~
       ~$results~
+      ~br~
       ```
