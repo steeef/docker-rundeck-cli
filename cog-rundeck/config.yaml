@@ -16,7 +16,7 @@ config:
   env:
     - var: RUNDECK_URL
       description: |
-      **Required**. The full URL to your Rundeck instance
+        **Required**. The full URL to your Rundeck instance
         (e.g., `http://rundeck.example:4440`).
     - var: RUNDECK_TOKEN
       description: |
