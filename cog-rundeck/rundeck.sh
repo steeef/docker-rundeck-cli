@@ -20,16 +20,32 @@ echo "COGCMD_INFO: Using project ${project}"
 case "$(basename "$0")" in
   list)
     echo "COGCMD_INFO: Listing jobs in project ${project}"
-    echo "COG_TEMPLATE: table"
-    rundeck-list-jobs ${project} ${ARGUMENTS[*]}
+    # Just get job names and descriptions, nothing else
+    # otherwise we get a huge list that exceeds the max msg length
+    results=$(rundeck-list-jobs -F csv ${project} ${ARGUMENTS[*]} \
+      | grep -E '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}')
+    # Now get just the name and description
+    if [ -n "${results}" ]; then
+      echo "COG_TEMPLATE: joblist"
+      echo "JSON"
+      jq -nR '[inputs | split(",") | {"name": .[1], "descr": .[2]}]' <<< "${results}"
+    else
+      echo "COGCMD_ERROR: No jobs found for ${project}"
+      echo "ERROR: No jobs found for ${project}"
+    fi
     ;;
   run)
     echo "COGCMD_INFO: Finding job named ${ARGUMENTS[*]} in ${project}"
-    jobid=$(rundeck-find-job-by-name "${ARGUMENTS[*]}" ${project} | grep " ${ARGUMENTS[*]} " | cut -d' ' -f2)
+    jobid=$(rundeck-find-job-by-name "${ARGUMENTS[*]}" ${project} \
+      | grep -E '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}' \
+      | cut -d' ' -f2)
     if [ -n "${jobid}" ]; then
       echo "COGCMD_INFO: found job: ${jobid}"
       echo "COGCMD_INFO: running job ${jobid} with arguments: ${COG_OPT_ARG}"
-      rundeck-run-job ${jobid} ${COG_OPT_ARG}
+      results=$(rundeck-run-job ${jobid} ${COG_OPT_ARG})
+      execution_id=$(echo $results | grep -oE '[0-9]+')
+      link="${RUNDECK_URL}/project/${project}/execution/show/${execution_id}"
+      echo "${results}: ${link}"
     else
       echo "COGCMD_ERROR: job not found."
       echo "ERROR: job not found."
