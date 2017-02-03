@@ -4,7 +4,32 @@ name: rundeck
 description: "go-rundeck interface"
 author: "Stephen Price <stephen@stp5.net>"
 homepage: "https://github.com/steeef/docker-rundeck-cli"
-version: "0.1.21"
+version: "0.2.0"
+long_description: |
+  A wrapper for [go-rundeck](https://github.com/lusis/go-rundeck).
+  Uses a bash script to format output of individual go-rundeck utilties for display
+  in chat.
+config:
+  notes: |
+    In order to authenticate against Rundeck, you must either use
+    `RUNDECK_USERNAME` and `RUNDECK_PASSWORD`, or `RUNDECK_TOKEN`.
+  env:
+    - var: RUNDECK_URL
+      description: |
+      **Required**. The full URL to your Rundeck instance
+        (e.g., `http://rundeck.example:4440`).
+    - var: RUNDECK_TOKEN
+      description: |
+        The API token to use.
+    - var: RUNDECK_USERNAME
+    - var: RUNDECK_PASSWORD
+    - var: RUNDECK_DEFAULT_PROJECT
+      description: |
+        Optional. The default Rundeck project to use if not specified with `--prj`
+        in commands.
+permissions:
+  - rundeck:read
+  - rundeck:run
 docker:
   image: "steeef/cog-rundeck"
   tag: "latest"
@@ -12,10 +37,12 @@ commands:
   list:
     executable: "/bundle/list"
     description: "List available jobs."
+    examples: |
+      rundeck:list --prj myproject
     long_description: |
       List jobs in a project. If "--prj" is not specified, use the default.
     rules:
-      - "when command is rundeck:list allow"
+      - "must have rundeck:read"
     options:
       prj:
         description: "Project ID of jobs to list."
@@ -25,8 +52,14 @@ commands:
   run:
     executable: "/bundle/run"
     description: "Run a job by name."
+    long_description: |
+      Run a specific job by its name. If "--prj" is not specified, use the default.
+    examples: |
+      rundeck:run --prj myproject myjob
+      rundeck:run --prj myproject --args "some arguments" myjob
+      rundeck:run myjob
     rules:
-      - "when command is rundeck:run allow"
+      - "must have rundeck:run"
     arguments: "<jobname>"
     options:
       prj:
@@ -42,8 +75,17 @@ commands:
   history:
     executable: "/bundle/history"
     description: "Get job history for a specified project."
+    long_description: |
+      Get the full history of all jobs in a project. If "--prj" is not specified,
+      use the default.
+    examples: |
+      rundeck:history --prj myproject
+    notes: |
+      This command is messy, and because it's often large, it exceeds the maximum
+      message size and gets split between separate messages in chat. In the future,
+      this should be paginated and split properly.
     rules:
-      - "when command is rundeck:history allow"
+      - "must have rundeck:read"
     options:
       prj:
         description: "Project ID of jobs to list."

@@ -1,6 +1,24 @@
 # cog-rundeck
 
-intended to be used as a Cog bundle.
+A wrapper for [go-rundeck](https://github.com/lusis/go-rundeck).
+Intended to be used as a [Cog](https://github.com/operable/cog) bundle.
+In order to use this with your own Rundeck installation, a few environment
+variables must be set:
+
+- `RUNDECK_URL`: The full URL to your Rundeck instance (e.g.,
+  `http://rundeck.example:4440`).
+- `RUNDECK_TOKEN`: The API token to use.
+
+As an alternative to the token, you could instead use:
+
+- `RUNDECK_USERNAME`
+- `RUNDECK_PASSWORD`
+
+Either username/password or token must be set to authenticate.
+
+You can also specify a default project with
+
+- `RUNDECK_DEFAULT_PROJECT`
 
 ## Testing
 
@@ -24,9 +42,9 @@ project first):
 docker run \
   -e RUNDECK_URL=http://rundeck:4440 \
   -e RUNDECK_USERNAME=admin \
-  -e RUNDECK_PASSWORD=password \
+  -e RUNDECK_PASSWORD=admin \
   -e COG_ARGC=1 \
   -e COG_ARGV_0=test \
   --network=rundeck \
-  steeef/cog-rundeck /bundle/rundeck.sh list
+  steeef/cog-rundeck /bundle/list
 ```
