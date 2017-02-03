@@ -2,12 +2,16 @@
 
 export PATH=${PATH}:/usr/local/bin
 
-echo "COGCMD_WARN: Getting arguments"
-declare -a ARGUMENTS
-for ((i=0;i<${COG_ARGC};i++)); do
-    var="COG_ARGV_${i}"
-    ARGUMENTS[$i]=${!var}
-done
+if [ -n "${COG_ARGC}" ]; then
+  echo "COGCMD_WARN: Getting arguments"
+  declare -a ARGUMENTS
+  for ((i=0;i<${COG_ARGC};i++)); do
+      var="COG_ARGV_${i}"
+      ARGUMENTS[$i]=${!var}
+  done
+else
+  echo "COGCMD_WARN: No arguments found"
+fi
 
 echo "COGCMD_WARN: Getting project"
 if [ -n "${COG_OPT_PRJ}" ]; then
